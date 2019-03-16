@@ -1,2 +1,2 @@
 # Twitter
-Twitter-like portal
+Twitter-like portal based on sqlite

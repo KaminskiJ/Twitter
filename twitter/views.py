@@ -1,8 +1,13 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
 from django.views import View, generic
+from django.views.generic import CreateView
+
+from twitter import models
 from twitter.models import Tweet
 from django import forms
-from twitter.forms import UserRegisterForm
+from twitter.forms import UserRegisterForm, TweetForm
 
 # Create your views here.
 
@@ -35,3 +40,13 @@ class RegisterView(View):
             return redirect('/')
 
         return render(request, self.template_name, {'form': form})
+
+
+class ComposeView(LoginRequiredMixin, CreateView):
+    model = models.Tweet
+    form_class = TweetForm
+    success_url = reverse_lazy('twitter:index')
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
