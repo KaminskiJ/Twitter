@@ -16,3 +16,12 @@ class Tweet(models.Model):
     def __str__(self):
         return f'[{self.creation_date}] ' \
                f'TWEET by {self.author}: {self.content[:20]}'
+
+
+'''
+wersja dla pythona ponizej 3.5
+    def __str__(self):
+        return '[{}] TWEET by {}: {}'.format(
+            self.creation_date,
+            self.author, self.content[:20])
+'''
